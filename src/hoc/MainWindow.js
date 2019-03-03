@@ -11,11 +11,13 @@ const { dialog } = require("electron").remote;
 
 const styles = theme => ({
   root: {
-    display: 'flex'
+    display: "flex",
+    flexGrow: 1
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 4
+    padding: theme.spacing.unit * 4,
+    paddingTop: theme.spacing.unit * 8,
   },
   toolbar: theme.mixins.toolbar
 });
@@ -49,27 +51,7 @@ class MainView extends Component {
         />
         <main className={classes.content}>
           <div className={classes.toolbar}>
-            <Grid container spacing={24}>
-              <Grid item xs={12} />
-              <Grid item xs={6}>
-                <Paper className={classes.paper}>xs=6</Paper>
-              </Grid>
-              <Grid item xs={6}>
-                <Paper className={classes.paper}>xs=6</Paper>
-              </Grid>
-              <Grid item xs={3}>
-                <Paper className={classes.paper}>xs=3</Paper>
-              </Grid>
-              <Grid item xs={3}>
-                <Paper className={classes.paper}>xs=3</Paper>
-              </Grid>
-              <Grid item xs={3}>
-                <Paper className={classes.paper}>xs=3</Paper>
-              </Grid>
-              <Grid item xs={3}>
-                <Paper className={classes.paper}>xs=3</Paper>
-              </Grid>
-            </Grid>
+
           </div>
         </main>
       </div>

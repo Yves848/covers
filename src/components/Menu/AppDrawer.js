@@ -1,24 +1,25 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
+import Paper from '@material-ui/core/Paper'
 import Button from "@material-ui/core/Button"
 const drawerWidth = 240;
 
 const styles = theme =>( {
-  list: {
-    width: 250
-  },
   drawer: {
     width: drawerWidth,
     flexShrink: 0
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 4,
+    //padding: theme.spacing.unit * 4,
     paddingTop: theme.spacing.unit * 8
   },
   drawerPaper: {
     width: drawerWidth
+  },
+  button: {
+    fullWidth: true
   },
 
   toolbar: theme.mixins.toolbar
@@ -39,9 +40,9 @@ class AppDrawer extends Component {
         classes={{ paper: classes.drawerPaper }}
       >
         <div className={classes.content}>
-          <Button variant="extendedFab" color="primary" style={{ marginBottom: '5px'}}>Répertoire</Button>
-          <Button>Répertoire</Button>
-          <Button>Répertoire</Button>
+
+          <Button variant="extendedFab" color="primary" style={{fullWidth:true}}>Répertoire</Button>
+
         </div>
       </Drawer>
     );
