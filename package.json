@@ -1,5 +1,5 @@
 {
-  "name": "CommitV5",
+  "name": "MP3Covers",
   "version": "1.2.3",
   "description": "",
   "license": "MIT",
@@ -40,6 +40,7 @@
     "@blueprintjs/core": "^3.6.1",
     "@blueprintjs/icons": "^3.6.0",
     "@material-ui/core": "^3.9.2",
+    "@material-ui/icons": "^3.0.2",
     "antd": "^3.13.2",
     "axios": "^0.18.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
