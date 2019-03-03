@@ -41,7 +41,7 @@ class AppDrawer extends Component {
       >
         <div className={classes.content}>
 
-          <Button variant="extendedFab" color="primary" style={{fullWidth:true}}>Répertoire</Button>
+          <Button variant="extendedFab" color="primary" fullWidth>Répertoire</Button>
 
         </div>
       </Drawer>
