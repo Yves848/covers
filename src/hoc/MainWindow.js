@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import MenuAppBar from "../components/Menu/AppBar";
 import AppDrawer from "../components/Menu/AppDrawer";
 import { CssBaseline } from "@material-ui/core";
+import MP3List from "../components/Lists/mp3List";
 const { dialog } = require("electron").remote;
 
 const styles = theme => ({
@@ -17,7 +18,7 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 4,
-    paddingTop: theme.spacing.unit * 8,
+    //paddingTop: theme.spacing.unit * 4
   },
   toolbar: theme.mixins.toolbar
 });
@@ -50,9 +51,8 @@ class MainView extends Component {
           handleDrawer={this.handleDrawerOpen}
         />
         <main className={classes.content}>
-          <div className={classes.toolbar}>
 
-          </div>
+          <MP3List folder={"/Users/yves/Desktop/mp3/"}></MP3List>
         </main>
       </div>
     );

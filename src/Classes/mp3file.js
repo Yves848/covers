@@ -2,22 +2,24 @@ const NodeID3 = require('node-id3');
 const path = require('path');
 const fs = require('fs');
 const jsmediatags = require('jsmediatags');
+const mp3file = require('./mp3file.json');
 
-export default class Mp3File {
-  constructor(pathName = '', fileName = '', index = -1) {
-    this.pathName = pathName;
-    this.fileName = fileName;
-    this.index = index;
-    this.hasCover = false;
+function Mp3File(pathName = '', fileName = '', index = -1) {
+    this.mp3 = {...mp3file}
+    this.mp3.pathName = pathName;
+    this.mp3.fileName = fileName;
+    this.mp3.index = index;
+
+
   }
 
-  setJson = json => {
+const  setJson = json => {
     this.json = { ...json };
   };
 
-  getTags2 = async obj => {
+Mp3File.getTags2 = async => {
     return new Promise(resolve => {
-      let filename = path.resolve(obj.pathName, obj.fileName);
+      let filename = path.resolve(mp3.pathName, mp3.fileName);
       new jsmediatags.Reader(filename).setTagsToRead(['title', 'artist']).read({
         onSuccess: tag => {
           resolve(tag.tags);
@@ -26,7 +28,7 @@ export default class Mp3File {
     });
   };
 
-  getTags = (obj) => {
+Mp3File.getTags = (obj) => {
     return new Promise(resolve => {
       let filename = path.resolve(obj.pathName, obj.fileName);
       new jsmediatags.Reader(filename).setTagsToRead(['title', 'artist','picture']).read({
@@ -40,13 +42,12 @@ export default class Mp3File {
     })
   };
 
-  getPicture = async (object, image) => {
+const  getPicture = async (object, image) => {
     const url = await this.Picture(object);
-    //console.log('getPicture', url);
     return url;
   };
 
-  writePicture = async (Object,image) => {
+const  writePicture = async (Object,image) => {
     return new Promise((resolve, reject) => {
       const imageName = path.resolve('./temp.jpg');
       fs.writeFileSync(imageName,image)
@@ -55,8 +56,6 @@ export default class Mp3File {
         title: Object.title,
         APIC: imageName
       }
-      //console.log('file', f);
-      //console.log('writePicture',Object)
       NodeID3.update(tags, path.resolve(Object.pathName, Object.fileName), (err) => {
         console.log(err);
       });
@@ -65,7 +64,7 @@ export default class Mp3File {
 
   }
 
-  Picture = async obj => {
+const  Picture = async obj => {
     return new Promise((resolve, reject) => {
       let filename = path.resolve(this.pathName, this.fileName);
       new jsmediatags.Reader(filename).setTagsToRead(['title', 'picture']).read({
@@ -83,10 +82,11 @@ export default class Mp3File {
     });
   };
 
-  getImgUrl = obj => {
+const  getImgUrl = obj => {
     var arrayBufferView = new Uint8Array(obj.picture.data);
     var blob = new Blob([arrayBufferView], { type: 'image/jpeg' });
     var urlCreator = window.URL || window.webkitURL;
     return urlCreator.createObjectURL(blob);
   };
-}
+
+export {Mp3File}
