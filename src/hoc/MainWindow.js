@@ -8,7 +8,7 @@ import MenuAppBar from "../components/Menu/AppBar";
 import AppDrawer from "../components/Menu/AppDrawer";
 import { CssBaseline } from "@material-ui/core";
 import MP3List from "../components/Lists/mp3List";
-const { dialog } = require("electron").remote;
+const { dialog, ipcMain } = require("electron").remote;
 
 const styles = theme => ({
   root: {
@@ -18,7 +18,7 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 4,
-    //paddingTop: theme.spacing.unit * 4
+    paddingTop: theme.spacing.unit * 5
   },
   toolbar: theme.mixins.toolbar
 });
@@ -27,13 +27,28 @@ class MainView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isDrawerOpen: false
+      isDrawerOpen: false,
+      folder: ''
     };
+  }
+
+  openFolder = async (events, args) => {
+    const folders = await dialog.showOpenDialog({properties: ['openDirectory']});
+    if (folders && folders.length > 0) {
+      //console.log(folders)
+      this.setState({
+        folder: folders[0]
+      })
+    }
+  }
+
+  componentDidMount = () => {
+    ipcMain.on('open-folder', (event, args) => this.openFolder(event, args));
   }
 
   handleDrawerOpen = () => {
     const { isDrawerOpen } = this.state;
-    console.log("ManWindow - handleDrawerOpen => isDrawerOpen ", isDrawerOpen);
+    //console.log("ManWindow - handleDrawerOpen => isDrawerOpen ", isDrawerOpen);
     this.setState({
       isDrawerOpen: !isDrawerOpen
     });
@@ -41,6 +56,7 @@ class MainView extends Component {
 
   render() {
     const { classes } = this.props;
+    const { folder } = this.state;
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -52,7 +68,7 @@ class MainView extends Component {
         />
         <main className={classes.content}>
 
-          <MP3List folder={"/Users/yves/Desktop/mp3/"}></MP3List>
+          <MP3List folder={folder}></MP3List>
         </main>
       </div>
     );

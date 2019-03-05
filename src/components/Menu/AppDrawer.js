@@ -1,28 +1,29 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import Paper from '@material-ui/core/Paper'
-import Button from "@material-ui/core/Button"
+import React, { Component } from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+const { ipcRenderer } = require('electron');
 const drawerWidth = 240;
 
-const styles = theme =>( {
+const styles = theme => ({
   drawer: {
     width: drawerWidth,
-    flexShrink: 0
+    flexShrink: 0,
   },
   content: {
     flexGrow: 1,
     //padding: theme.spacing.unit * 4,
-    paddingTop: theme.spacing.unit * 8
+    paddingTop: theme.spacing.unit * 8,
+    paddingRight: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit,
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
   },
-  button: {
-    fullWidth: true
-  },
+  button: {},
 
-  toolbar: theme.mixins.toolbar
+  toolbar: theme.mixins.toolbar,
 });
 
 class AppDrawer extends Component {
@@ -32,17 +33,17 @@ class AppDrawer extends Component {
 
   render() {
     const { isOpen, classes } = this.props;
-    console.log("AppDrawer - render => isOpen ", isOpen);
+    //console.log('AppDrawer - render => isOpen ', isOpen);
     return (
       <Drawer
-      className={classes.drawer}
+        className={classes.drawer}
         variant="permanent"
         classes={{ paper: classes.drawerPaper }}
       >
         <div className={classes.content}>
-
-          <Button variant="extendedFab" color="primary" fullWidth>Répertoire</Button>
-
+          <Button variant="contained" color="primary" fullWidth onClick={() => {ipcRenderer.send('open-folder')}}>
+            Répertoire
+          </Button>
         </div>
       </Drawer>
     );
