@@ -22,7 +22,7 @@ class Mp3File {
     return new Promise((resolve, reject) => {
       let filename = path.resolve(this.mp3.pathName, this.mp3.fileName);
       new jsmediatags.Reader(filename)
-        .setTagsToRead(['title', 'artist', 'picture'])
+        .setTagsToRead(['title', 'artist','picture'])
         .read({
           onSuccess: tag => {
             this.mp3.tags = { ...tag.tags };

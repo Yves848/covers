@@ -8,7 +8,7 @@ import lightBlue from '@material-ui/core/colors/lightBlue';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-
+import Mp3Detail from '../detail/Mp3Detail';
 
 const styles = theme => ({
   root: {
@@ -17,7 +17,7 @@ const styles = theme => ({
     border: '2px',
     borderStyle: 'solid',
     borderColor: blueGrey[100],
-    borderRadius: '15px 50px',
+    borderRadius: '15px 5px 50px 5px',
     marginBottom: theme.spacing.unit,
   },
   details: {
@@ -45,10 +45,30 @@ const styles = theme => ({
 class Mp3ListItem extends Component {
   constructor(props) {
     super(props);
+    this.state={
+      isDetailOpen: false
+    }
   }
+
+  handleDetailClose = () => {
+    this.setState({
+      isDetailOpen: false
+    })
+  }
+
   render() {
     const { mp3, classes } = this.props;
+    const {isDetailOpen} = this.state;
     return (
+      <div>
+        <Mp3Detail
+          isOpen={isDetailOpen}
+          handleClose={() => {
+            this.handleDetailClose();
+          }}
+          mp3={mp3}
+        />
+      
       <ListItem
         key={mp3.index}
         alignItems="flex-start"
@@ -104,7 +124,9 @@ class Mp3ListItem extends Component {
                   variant="contained"
                   size="small"
                   onClick={() => {
-                    alert(`click : ${mp3.tags.artist}`);
+                    this.setState({
+                      isDetailOpen: true
+                    });
                   }}
                 >
                   Détail
@@ -114,6 +136,7 @@ class Mp3ListItem extends Component {
           </Grid>
         </div>
       </ListItem>
+      </div>
     );
   }
 }

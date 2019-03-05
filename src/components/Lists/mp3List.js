@@ -34,6 +34,7 @@ class MP3List extends Component {
       list: [],
       filling: false,
       iProgress: 0,
+     
     };
   }
 
@@ -41,7 +42,7 @@ class MP3List extends Component {
     this.setState({
       iProgress: 0,
       filling: true,
-      list: []
+      list: [],
     });
     let files = [];
     try {
@@ -98,6 +99,8 @@ class MP3List extends Component {
     });
   };
 
+  
+
   render() {
     const { list, filling, iProgress } = this.state;
     const { classes, folder } = this.props;
@@ -114,12 +117,12 @@ class MP3List extends Component {
         <FillProgress iProgress={iProgress} folder={folder} />
       ) : (
         <div className={classes.nothing}>
-          
           <h1>Choisir un répertoire ..... </h1>
         </div>
       )
     ) : (
       <div className={classes.content}>
+        
         <List className={classes.root}>{files}</List>
       </div>
     );
