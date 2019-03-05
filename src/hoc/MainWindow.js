@@ -1,26 +1,23 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import MenuAppBar from "../components/Menu/AppBar";
-import AppDrawer from "../components/Menu/AppDrawer";
-import { CssBaseline } from "@material-ui/core";
-import MP3List from "../components/Lists/mp3List";
-const { dialog, ipcMain } = require("electron").remote;
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import MenuAppBar from '../components/Menu/AppBar';
+import AppDrawer from '../components/Menu/AppDrawer';
+import { CssBaseline } from '@material-ui/core';
+import MP3List from '../components/Lists/mp3List';
+const { dialog, ipcMain } = require('electron').remote;
 
 const styles = theme => ({
   root: {
-    display: "flex",
-    flexGrow: 1
+    display: 'flex',
+    flexGrow: 1,
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 4,
-    paddingTop: theme.spacing.unit * 5
+    paddingTop: theme.spacing.unit * 6,
   },
-  toolbar: theme.mixins.toolbar
+  toolbar: theme.mixins.toolbar,
 });
 
 class MainView extends Component {
@@ -33,30 +30,32 @@ class MainView extends Component {
   }
 
   openFolder = async (events, args) => {
-    const folders = await dialog.showOpenDialog({properties: ['openDirectory']});
+    const folders = await dialog.showOpenDialog({ properties: ['openDirectory'] });
     if (folders && folders.length > 0) {
       //console.log(folders)
       this.setState({
-        folder: folders[0]
-      })
+        folder: folders[0],
+      });
     }
-  }
+  };
 
   componentDidMount = () => {
     ipcMain.on('open-folder', (event, args) => this.openFolder(event, args));
-  }
+  };
 
   handleDrawerOpen = () => {
     const { isDrawerOpen } = this.state;
     //console.log("ManWindow - handleDrawerOpen => isDrawerOpen ", isDrawerOpen);
     this.setState({
-      isDrawerOpen: !isDrawerOpen
+      isDrawerOpen: !isDrawerOpen,
     });
   };
+  
 
   render() {
     const { classes } = this.props;
     const { folder } = this.state;
+
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -67,8 +66,7 @@ class MainView extends Component {
           handleDrawer={this.handleDrawerOpen}
         />
         <main className={classes.content}>
-
-          <MP3List folder={folder}></MP3List>
+          <MP3List folder={folder}/>
         </main>
       </div>
     );
