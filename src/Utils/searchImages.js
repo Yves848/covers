@@ -8,8 +8,8 @@ async function asyncForEach(array, callback) {
   }
 }
 
- const searchImageAS = async (key) =>{
-   //console.log('SearchImageAS')
+const searchImageAS = async (key) => {
+  //console.log('SearchImageAS')
   const tempImages = [];
   var CSE_API_KEY = '007439388879951561867:3ragl0fkhpm';
   var CSE_ID = 'AIzaSyDYvQx76ZvFawwKOaDeGqRClb2RJlIcsXM';
@@ -28,7 +28,7 @@ async function asyncForEach(array, callback) {
     response = await axios.get(path);
     if (response) {
       var images = response.data.items;
-      await asyncForEach(images, async (image,i) => {
+      await asyncForEach(images, async (image, i) => {
         //const img = await DownloadImage(image.link);
         //if (isJpg(img)) {
         tempImages.push({
@@ -36,14 +36,14 @@ async function asyncForEach(array, callback) {
           width: image.image.width,
           height: image.image.height,
         });
-      //}
+        //}
       })
-  
+
       const covers = tempImages.map((image, i) => {
-          return {
-            image: image.url,
-            type: 'GoogleSearch',
-          };
+        return {
+          image: image.url,
+          type: 'GoogleSearch',
+        };
       });
       return covers;
     }
@@ -56,19 +56,18 @@ async function asyncForEach(array, callback) {
   }
 
   //console.log('searchImageAS',response);
-  
+
 }
 
-const searchLastFMAS = async (mp3File) =>{
-    //console.log("[searchLastFM] mp3File", mp3File);
-    //console.log('SearchLastFMAS')
-    const url = `http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=0f61370d07c524f982180c2f0f108d9c&artist=${
-      mp3File.artist
+const searchLastFMAS = async (mp3File) => {
+  //console.log("[searchLastFM] mp3File", mp3File);
+  //console.log('SearchLastFMAS')
+  const url = `http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=0f61370d07c524f982180c2f0f108d9c&artist=${
+    mp3File.artist
     }&track=${mp3File.title}&format=json`;
-    const response = await axios.get(url);
-    //console.log('[searchLastFM] response', response);
-    try
-    {
+  const response = await axios.get(url);
+  //console.log('[searchLastFM] response', response);
+  try {
     if (response.data.track.album) {
       const image = response.data.track.album.image[3]['#text'];
       if (image) {
@@ -86,7 +85,7 @@ const searchLastFMAS = async (mp3File) =>{
 
 const DownloadImage = async (url, image_path) => {
   return new Promise(async (resolve, reject) => {
-    await request({ url, encoding: null,rejectUnauthorized: false,  }, (err, resp, buffer) => {
+    await request({ url, encoding: null, rejectUnauthorized: false, }, (err, resp, buffer) => {
       if (err) {
         reject(err);
       }
@@ -96,4 +95,4 @@ const DownloadImage = async (url, image_path) => {
 };
 
 
-export {searchImageAS,searchLastFMAS, DownloadImage}
+export { searchImageAS, searchLastFMAS, DownloadImage }
